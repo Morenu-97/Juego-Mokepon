@@ -1,2 +1,2 @@
 # Juego-Mokepon
-Juego realizado a partir de un curso de platzi, utilizando HTML, JS Y CSS
+Este juego es el resultado final de un curso de platzi, se utiliza HTML, JS Y CSS
