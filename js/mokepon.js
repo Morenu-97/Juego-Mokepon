@@ -24,7 +24,7 @@ function iniciarJuego() {
   let botonTierra = document.getElementById("Boton-tierra");
   botonTierra.addEventListener("click", ataqueTierra);
 
-  let botonReiniciar = document.getElementById("Boton-reiniciar");
+  let botonReiniciar = document.getElementById("boton-reiniciar");
   botonReiniciar.addEventListener("click", reiniciarJuego);
 }
 
@@ -35,7 +35,7 @@ function seleccionarMascotaJugador() {
   sectionSeleccionarMascota.style.display = "none";
 
   let sectionSeleccionarAtaque = document.getElementById("selectionar-ataque");
-  sectionSeleccionarAtaque.style.display = "block";
+  sectionSeleccionarAtaque.style.display = "flex";
 
   let inputHipodoge = document.getElementById("Hipodoge");
   let inputCapipepo = document.getElementById("Capipepo");
@@ -113,50 +113,50 @@ function combate() {
   ) {
     crearMensaje("Ganaste");
     vidasEnemigo--;
-    spanVidasEnemigo.innerHTML = vidasEnemigo;
+    spanVidasEnemigo.innerHTML = "♥️ " + vidasEnemigo;
   } else {
     crearMensaje("Perdiste");
     vidasJugador--;
-    spanVidasJugador.innerHTML = vidasJugador;
+    spanVidasJugador.innerHTML = "♥️ " + vidasJugador;
   }
   revisarVidas();
 }
 
 function revisarVidas() {
   if (vidasEnemigo == 0) {
-    crearMensajeFinal("Felicitaciones! Ganaste 🥳");
+    crearMensajeFinal("Ganaste🥳👌");
   } else if (vidasJugador == 0) {
     crearMensajeFinal("Perdiste 👎😖");
   }
 }
 
 function crearMensaje(resultado) {
-  let sectionMensajes = document.getElementById("mensajes");
+  let sectionMensajes = document.getElementById("resultado");
+  let ataquesDelJugador = document.getElementById("ataques-del-jugador");
+  let ataquesDelEnemigo = document.getElementById("ataques-del-enemigo");
 
-  let parrafo = document.createElement("p"); // en comillas se pone la etiqueta que se quiere crear (p o div etc)
-  parrafo.innerHTML =
-    "Tú mascota ataco con " +
-    ataqueJugador +
-    " la mascota del enemigo atacó con " +
-    ataqueEnemigo +
-    " -  " +
-    resultado;
+  let nuevoAtaqueDelJugador = document.createElement("p"); // en comillas se pone la etiqueta que se quiere crear (p o div etc)
+  let nuevoAtaqueDelEnemigo = document.createElement("p");
 
-  sectionMensajes.appendChild(parrafo);
+  sectionMensajes.innerHTML = resultado;
+  nuevoAtaqueDelJugador.innerHTML = ataqueJugador;
+  nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo;
+
+  ataquesDelJugador.appendChild(nuevoAtaqueDelJugador);
+  ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo);
 }
 
 function crearMensajeFinal(resultadoFinal) {
-  let sectionMensajes = document.getElementById("mensajes");
+  let sectionMensajes = document.getElementById("resultado");
 
-  let parrafo = document.createElement("p"); // en comillas se pone la etiqueta que se quiere crear (p o div etc)
-  parrafo.innerHTML = resultadoFinal;
-
-  sectionMensajes.appendChild(parrafo);
+  sectionMensajes.innerHTML = resultadoFinal;
 
   let botonFuego = document.getElementById("Boton-fuego");
   botonFuego.disabled = true;
+
   let botonAgua = document.getElementById("Boton-agua");
   botonAgua.disabled = true;
+
   let botonTierra = document.getElementById("Boton-tierra");
   botonTierra.disabled = true;
 
