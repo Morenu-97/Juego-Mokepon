@@ -19,17 +19,23 @@ const contenedorTarjetas = document.getElementById("contenedor-tarjetas");
 const contenedorAtaques = document.getElementById("contenedor-ataques");
 
 let mokepones = [];
-let ataqueJugador;
-let ataqueEnemigo;
+let ataqueJugador = [];
+let ataqueEnemigo = [];
 let opcionDeMokepones;
 let inputHipodoge;
 let inputCapipepo;
 let inputRatigueya;
 let mascotaJugador;
 let ataquesMokepon;
+let ataquesMokeponEnemigo;
 let botonFuego;
 let botonAgua;
 let botonTierra;
+let botones = [];
+let indexAtaqueJugador;
+let indexAtaqueEnemigo;
+let victoriasJugador = 0;
+let victoriasEnemigo = 0;
 let vidasJugador = 3;
 let vidasEnemigo = 3;
 
@@ -145,10 +151,11 @@ function extraerAtaques(mascotaJugador) {
   mostrarAtaques(ataques);
 }
 
+//por que se pueden agregar dos nombres de clase y por que despues de {ataque.nombre} si se agrega un espacio, antes de cerrar el boton este queda guardado con este
 function mostrarAtaques(ataques) {
   ataques.forEach((ataque) => {
     ataquesMokepon = `
-     <button id=${ataque.id} class="boton-de-ataque">${ataque.nombre} </button>
+     <button id=${ataque.id} class="boton-de-ataque BAtaque">${ataque.nombre}</button> 
 `;
     contenedorAtaques.innerHTML += ataquesMokepon;
   });
@@ -156,10 +163,31 @@ function mostrarAtaques(ataques) {
   botonFuego = document.getElementById("Boton-fuego");
   botonAgua = document.getElementById("Boton-agua");
   botonTierra = document.getElementById("Boton-tierra");
+  botones = document.querySelectorAll(".BAtaque");
+}
 
-  botonFuego.addEventListener("click", ataqueFuego);
-  botonAgua.addEventListener("click", ataqueAgua);
-  botonTierra.addEventListener("click", ataqueTierra);
+function secuenciaAtaque() {
+  botones.forEach((boton) => {
+    boton.addEventListener("click", (e) => {
+      if (e.target.textContent === "🔥") {
+        ataqueJugador.push("Fuego");
+        console.log(ataqueJugador);
+        boton.style.background = "#112f58";
+        boton.disabled = true;
+      } else if (e.target.textContent === "🌊") {
+        ataqueJugador.push("Agua");
+        console.log(ataqueJugador);
+        boton.style.background = "#112f58";
+        boton.disabled = true;
+      } else {
+        ataqueJugador.push("Tierra");
+        console.log(ataqueJugador);
+        boton.style.background = "#112f58";
+        boton.disabled = true;
+      }
+      ataqueAleatorioEnemigo();
+    });
+  });
 }
 
 function aleatorio(min, max) {
@@ -170,60 +198,66 @@ function seleccionarMascotaEnemigo() {
   let mascotaAleatoria = aleatorio(0, mokepones.length - 1);
 
   spanMascotaEnemigo.innerHTML = mokepones[mascotaAleatoria].nombre;
+  ataquesMokeponEnemigo = mokepones[mascotaAleatoria].ataques;
+  secuenciaAtaque();
 }
 
-function ataqueFuego() {
-  ataqueJugador = "Fuego";
-  ataqueAleatorioEnemigo();
-}
-
-function ataqueAgua() {
-  ataqueJugador = "Agua";
-  ataqueAleatorioEnemigo();
-}
-
-function ataqueTierra() {
-  ataqueJugador = "Tierra";
-  ataqueAleatorioEnemigo();
-}
-
+//no entendi por que se salta el dos en las condiciones.
 function ataqueAleatorioEnemigo() {
-  let ataqueAleatorio = aleatorio(1, 3);
+  let ataqueAleatorio = aleatorio(0, ataquesMokeponEnemigo.length - 1);
 
-  if (ataqueAleatorio == 1) {
-    ataqueEnemigo = "Fuego";
-  } else if (ataqueAleatorio == 2) {
-    ataqueEnemigo = "Agua";
+  if (ataqueAleatorio == 0 || ataqueAleatorio == 1) {
+    ataqueEnemigo.push("Fuego");
+  } else if (ataqueAleatorio == 3 || ataqueAleatorio == 4) {
+    ataqueEnemigo.push("Agua");
   } else {
-    ataqueEnemigo = "Tierra";
+    ataqueEnemigo.push("Tierra");
   }
-  combate();
+  console.log(ataqueEnemigo);
+  iniciarPelea();
+}
+
+function iniciarPelea() {
+  if (ataqueJugador.length === 5) {
+    combate();
+  }
+}
+
+function indexAmbosOponentes(jugador, enemigo) {
+  indexAtaqueJugador = ataqueJugador[jugador];
+  indexAtaqueEnemigo = ataqueEnemigo[enemigo];
 }
 
 function combate() {
-  if (ataqueEnemigo == ataqueJugador) {
-    crearMensaje("Empate");
-  } else if (
-    (ataqueJugador == "Fuego" && ataqueEnemigo == "Tierra") ||
-    (ataqueJugador == "Tierra" && ataqueEnemigo == "Agua") ||
-    (ataqueJugador == "Agua" && ataqueEnemigo == "Fuego")
-  ) {
-    crearMensaje("Ganaste");
-    vidasEnemigo--;
-    spanVidasEnemigo.innerHTML = "♥️ " + vidasEnemigo;
-  } else {
-    crearMensaje("Perdiste");
-    vidasJugador--;
-    spanVidasJugador.innerHTML = "♥️ " + vidasJugador;
+  for (let index = 0; index < ataqueJugador.length; index++) {
+    if (ataqueJugador[index] === ataqueEnemigo[index]) {
+      indexAmbosOponentes(index, index);
+      crearMensaje("Empate");
+    } else if (
+      (ataqueJugador[index] === "Fuego" && ataqueEnemigo[index] === "Tierra") ||
+      (ataqueJugador[index] === "Tierra" && ataqueEnemigo[index] === "Agua") ||
+      (ataqueJugador[index] === "Agua" && ataqueEnemigo[index] === "Fuego")
+    ) {
+      indexAmbosOponentes(index, index);
+      crearMensaje("Ganaste");
+      victoriasJugador++;
+      spanVidasJugador.innerHTML = "🥇 " + victoriasJugador;
+    } else {
+      crearMensaje("Perdiste");
+      victoriasEnemigo++;
+      spanVidasEnemigo.innerHTML = "🥇 " + victoriasEnemigo;
+    }
   }
   revisarVidas();
 }
 
 function revisarVidas() {
-  if (vidasEnemigo == 0) {
+  if (victoriasJugador === victoriasEnemigo) {
+    crearMensajeFinal("Empate 😲🤙");
+  } else if (victoriasJugador > victoriasEnemigo) {
     crearMensajeFinal("Ganaste🥳👌");
-  } else if (vidasJugador == 0) {
-    crearMensajeFinal("Perdiste 👎😖");
+  } else {
+    crearMensajeFinal("Perdiste 😖👎");
   }
 }
 
@@ -232,8 +266,8 @@ function crearMensaje(resultado) {
   let nuevoAtaqueDelEnemigo = document.createElement("p");
 
   sectionMensajes.innerHTML = resultado;
-  nuevoAtaqueDelJugador.innerHTML = ataqueJugador;
-  nuevoAtaqueDelEnemigo.innerHTML = ataqueEnemigo;
+  nuevoAtaqueDelJugador.innerHTML = indexAtaqueJugador;
+  nuevoAtaqueDelEnemigo.innerHTML = indexAtaqueEnemigo;
 
   ataquesDelJugador.appendChild(nuevoAtaqueDelJugador);
   ataquesDelEnemigo.appendChild(nuevoAtaqueDelEnemigo);
@@ -242,9 +276,6 @@ function crearMensaje(resultado) {
 function crearMensajeFinal(resultadoFinal) {
   sectionMensajes.innerHTML = resultadoFinal;
 
-  botonFuego.disabled = true;
-  botonAgua.disabled = true;
-  botonTierra.disabled = true;
   sectionReiniciar.style.display = "block";
 }
 
