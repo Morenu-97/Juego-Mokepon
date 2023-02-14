@@ -184,6 +184,7 @@ function secuenciaAtaque() {
         console.log(ataqueJugador);
         boton.style.background = "#112f58";
         boton.disabled = true;
+        //debugger;
       }
       ataqueAleatorioEnemigo();
     });
@@ -243,6 +244,7 @@ function combate() {
       victoriasJugador++;
       spanVidasJugador.innerHTML = "🥇 " + victoriasJugador;
     } else {
+      indexAmbosOponentes(index, index);
       crearMensaje("Perdiste");
       victoriasEnemigo++;
       spanVidasEnemigo.innerHTML = "🥇 " + victoriasEnemigo;
