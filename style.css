@@ -13,10 +13,12 @@ body {
   align-items: center;
 }
 
-.titulo {
+.titulo,
+.titulo-canvas {
   color: red;
   font-family: "Nabla", cursive;
   font-size: 50px;
+  text-align: center;
 }
 
 .subtitulo {
@@ -121,10 +123,42 @@ input:checked + label {
   align-items: center;
 }
 
+.titulo-canvas {
+  font-size: 36px;
+  font-family: "Nabla", cursive;
+}
+
+#ver-mapa {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#ver-mapa button {
+  width: 80px;
+  height: 40px;
+  border-radius: 20px;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 22px;
+  margin-top: 10px;
+}
+
 @media (max-width: 548px) {
   .tarjetas,
   .boton-de-ataque {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 350px) {
+  #ver-mapa div {
+    display: flex;
+    align-items: center;
     flex-direction: column;
   }
 }
