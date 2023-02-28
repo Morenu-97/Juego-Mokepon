@@ -1,0 +1,23 @@
+{
+  "name": "juego-mokepon",
+  "version": "1.0.0",
+  "description": "Este juego es el resultado final de un curso de platzi, se utiliza HTML, JS, CSS y CANVAS.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Morenu-97/Juego-Mokepon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Morenu-97/Juego-Mokepon/issues"
+  },
+  "homepage": "https://github.com/Morenu-97/Juego-Mokepon#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}
