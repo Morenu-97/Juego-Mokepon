@@ -34,7 +34,6 @@ class Mokepon {
 }
 
 app.get("/unirse", (req, res) => {
-  //cuando en la url raiz, reciba una peticion responda "hola"
   const id = `${Math.random()}`; //template string hace que el id se convierta en una cadena de texto
 
   const jugador = new Jugador(id);

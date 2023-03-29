@@ -144,6 +144,7 @@ input:checked + label {
   font-family: "Poppins", sans-serif;
   font-size: 22px;
   margin-top: 10px;
+  user-select: none;
 }
 
 @media (max-width: 548px) {
